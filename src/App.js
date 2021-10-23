@@ -1,25 +1,63 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Header from './MyComponents/Header';
+import {Footer} from './MyComponents/Footer';
+import {Todos} from './MyComponents/Todos';
+import React, {useState} from 'react';
+import {About} from './MyComponents/About';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
 
 function App() {
+  const OnDelete = (todo) => {
+    console.log("I am ondelete.")
+
+    // Delete todo using State Hook
+    setTodos(todos.filter((e)=>{
+      return e !== todo;
+    }));
+
+  }
+  const [todos, setTodos] = useState([
+    {
+        sno: 1,
+        title: "Go to market",
+        desc: "Maza aaya"
+    },
+    {
+        sno: 2,
+        title: "Go to market",
+        desc: "Maza aaya"
+    },
+    {
+        sno: 3,
+        title: "Go to market",
+        desc: "Maza aaya"
+    }
+]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header title="MyTodoList" searchBar={false}/>
+      <Switch>
+          <Route exact path="/about">
+            <About />
+          </Route>
+
+          <Route exact path="/">
+          <Todos todos={todos} OnDelete={OnDelete}/>
+          </Route>
+
+        </Switch>
+    
+      <Footer/>
+    </Router>
   );
+
 }
 
 export default App;
